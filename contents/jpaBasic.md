@@ -1546,5 +1546,5 @@ cf) flush는 트랜잭션 커밋되거나 qury가 날라갈때 flush됨
 -----
 
 cf) 강의 커뮤니티에 좋은 질답이 있어 첨부.. 아래 스크린 샷이 문제 되면 알려주세요!    
-출처: 인프런, 자바 ORM 표준 JPA 프로그래밍 - 기본편  
-![](/img/cfscreenshot.png)
+출처: 인프런, 자바 ORM 표준 JPA 프로그래밍 - 기본편
+<img src="https://github.com/softwareym/jpa_basic/blob/master/contents/img/cfscreenshot.png" width="500" height="800">
