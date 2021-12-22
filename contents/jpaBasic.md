@@ -75,8 +75,7 @@ jpa는 JAVA애플리케이션과 JDBC 사이에서 동작
 • javax.persistence로 시작: JPA 표준 속성      
 • hibernate로 시작: 하이버네이트 전용 속성
 
-persistence.xml   
-![A](imgs/persistencexml.PNG)
+persistence.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8"?> 
 <persistence version="2.2"
@@ -1547,6 +1546,5 @@ cf) flush는 트랜잭션 커밋되거나 qury가 날라갈때 flush됨
 -----
 
 cf) 강의 커뮤니티에 좋은 질답이 있어 첨부.. 아래 스크린 샷이 문제 되면 알려주세요!    
-출처: 인프런, 자바 ORM 표준 JPA 프로그래밍 - 기본편
-![A](imgs/cfscreenshot.PNG)
-
+출처: 인프런, 자바 ORM 표준 JPA 프로그래밍 - 기본편  
+![](/img/cfscreenshot.png)
