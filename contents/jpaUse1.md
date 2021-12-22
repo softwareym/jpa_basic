@@ -3,9 +3,9 @@
 * 실전! 스프링 부트와 JPA 활용1 - 웹 애플리케이션 개발
 ---
 
-###gradle - boot + spring data jpa + queryDsl 조합
+### gradle - boot + spring data jpa + queryDsl 조합
 
-###<실무에서 사용하지 말기>
+### <실무에서 사용하지 말기>
 >•@ManyToMany x      
 >=>  @ManyToMany 는 편리한 것 같지만, 중간 테이블( CATEGORY_ITEM )에 컬럼을 추가할 수 없고, 세밀하게 쿼리를 실행하기 어렵기 때문에 실무에서 사용하기에는 한계가 있다.  
 >>중간 엔티티( CategoryItem ) 를 만들고 @ManyToOne , @OneToMany 로 매핑해서 사용하자. 정리하면 대다대 매핑을 일대다, 다대일 매핑으로 풀어내서 사용하자.        
@@ -41,7 +41,7 @@ public class Address {
 >>>-EnumType.ORDINAL : enum 순서 값을 DB에 저장        
 >>>-EnumType.STRING : enum 이름을 DB에 저장       
 
-###모든 연관관계는 지연로딩으로 설정!
+### 모든 연관관계는 지연로딩으로 설정!
 >-즉시로딩( EAGER )은 예측이 어렵고, 어떤 SQL이 실행될지 추적하기 어렵다. 특히 JPQL을 실행할 때 N+1 문제가 자주 발생한다.     
 (ex-member 테이블을 읽어들일때 연관된 모든 테이블을 다 읽어들임)       
 >>=>한건 조회할때는 eager 사용해도 되긴하는데, JPQL [select o From order o;] 실행 시 > SQL [select * from order 100+1(order)]과 같게 되어 100번 읽어 들이는 꼴..     
@@ -56,7 +56,7 @@ public class Address {
 >>> ** (결론) @XToMany는 기본이 지연로딩(LAZY)이라 그대로 두면 되는데, @XToOne인 경우에는 무!조!건! 즉시로딩(EAGER)이 기본이라 지연로딩(LAZY)으로 설정을 해줘야함       
 @ManyToOne, @OnToMany(fetch=LAZY)       
 
-###컬렉션은 필드에서 초기화 하자.
+### 컬렉션은 필드에서 초기화 하자.
 -컬렉션은 필드에서 바로 초기화 하는 것이 안전하다. null 문제에서 안전하다.           
 하이버네이트는 엔티티를 영속화 할 때, 컬랙션을 감싸서 하이버네이트가 제공하는 내장 컬렉션으로 변경한다.      
 만약 getOrders() 처럼 임의의 메서드에서 컬력션을 잘못 생성하면 하이버네이트 내부 메커니즘에 문제가 발생할 수 있다. 따라서 필드레벨에서 생성하는 것이 가장 안전하고, 코드도 간결하다.        
@@ -92,7 +92,7 @@ class org.hibernate.collection.internal.PersistentBag
 
 ```
 
-###테이블, 컬럼명 생성 전략
+### 테이블, 컬럼명 생성 전략
 -스프링 부트에서 하이버네이트 기본 매핑 전략을 변경해서 실제 테이블 필드명은 다름          
 cf)
 
@@ -114,7 +114,7 @@ spring.jpa.hibernate.naming.implicit-strategy : 테이블이나, 컬럼명을 �
 >spring.jpa.hibernate.naming.implicit-strategy:	org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy     
 >spring.jpa.hibernate.naming.physical-strategy:	org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrate
 
-###연관관계 메소드 [양방향일때 쓰면 좋음. 한쪽에만 코드 넣고 사용할 수 있음]
+### 연관관계 메소드 [양방향일때 쓰면 좋음. 한쪽에만 코드 넣고 사용할 수 있음]
 ex)
 ```java
 public class Order{
@@ -163,7 +163,7 @@ public class Order{
 >> [참고 : JPA활용1 > 웹 계층 개발 > 회원 목록 조회 8분~]
 
 -----
-###변경감지와 병합(merge)
+### 변경감지와 병합(merge)
 -실무에서 merge 안씀      
 -엔티티가 영속 상태로 관리가 되는데, 그 어떤 값을 변경하면.. jpa가 트랜잭션 커밋 시점에(@Transactional) 변경된 내용을 알아서 찾아서(flush) 디비에 값을 변경해줌        
 => 이것을 변경감지(dirty checking)라 함.             
@@ -191,12 +191,12 @@ public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
 //컨트롤러 단에서 엔티티를 사용하기 보다, 서비스층에서 변경감지 및 조회 등을 사용하자.(이유는 컨트롤러단에서는 @Transactional이 없기 때문에 영속성 컨텍스트 x )
 ```
 
-###영속성 컨텐스트란?       
+### 영속성 컨텐스트란?       
 -엔티티를 영구 저장하는 환경이라는 뜻이다.            
 -애플리케이션과 데이터베이스 사이에서 객체를 보관하는 가상의 데이터베이스 같은 역할을 한다. 엔티티 매니저를 통해 엔티티를 저장하거나 조회하면 엔티티 매니저는 영속성 컨텍스트에 엔티티를 보관하고 관리한다.      
 -em.persist(member); 엔티티 매니저를 사용해 회원 엔티티를 영속성 컨텍스트에 저장한다는 의미!       
 
-###영속성 컨텍스트의 특징             
+### 영속성 컨텍스트의 특징             
 -엔티티 매니저를 생성할 때 하나 만들어진다.       
 -엔티티 매니저를 통해서 영속성 컨텍스트에 접근하고 관리할 수 있다.      
 -cf ) https://velog.io/@neptunes032/JPA-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%9E%80       
